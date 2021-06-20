@@ -86,19 +86,22 @@ res := NumberParser(text)
 #### * Changer
 * Collects the same sequence of tokens until name is changed
 ```go
-// Create list for changer tokens output
-list := make([]*ChangerValue, 0, 32)
-
-// Create changer itself and give list for the output
-changer := pipe.NewChangerToList(&list)
+// Create changer
+changer := pipe.Changer()
 
 // Now we can filter diff values
 changer.Put("A", 12)
 changer.Put("A", 24)
 changer.Put("B", 144)
-changer.Done() // And we are done
+changer.Put("B", 188)
+changer.Put("B", 3)
+changer.Put("C", 13)
 
-// And we can check
+// And we are done
+list := changer.Done()
+
+// Result list will be
 list[0] // A : 12, 24
-list[1] // B : 144
+list[1] // B : 144, 188, 3
+list[2] // C : 13
 ```

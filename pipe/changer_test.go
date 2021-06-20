@@ -3,8 +3,7 @@ package pipe
 import "testing"
 
 func TestChanger(t *testing.T) {
-	list := make([]*ChangerValue, 0, 32)
-	c := NewChangerToList(&list)
+	c := NewChanger()
 
 	c.Put("A", 32)
 	c.Put("A", 64)
@@ -16,7 +15,7 @@ func TestChanger(t *testing.T) {
 	c.Put("C", 33)
 	c.Put("C", 4)
 
-	c.Done()
+	list := c.Done()
 
 	c1 := list[0]
 	c2 := list[1]

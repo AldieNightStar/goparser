@@ -1,9 +1,9 @@
 package pipe
 
 type Changer struct {
-	name string
-	list []interface{}
-	cb   func(*ChangerValue)
+	name    string
+	list    []interface{}
+	retList []*ChangerValue
 }
 
 type ChangerValue struct {
@@ -11,17 +11,11 @@ type ChangerValue struct {
 	List []interface{}
 }
 
-func NewChanger(cb func(*ChangerValue)) *Changer {
+func NewChanger() *Changer {
 	c := &Changer{}
 	c.list = make([]interface{}, 0, 32)
-	c.cb = cb
+	c.retList = make([]*ChangerValue, 0, 32)
 	return c
-}
-
-func NewChangerToList(list *[]*ChangerValue) *Changer {
-	return NewChanger(func(cv *ChangerValue) {
-		*list = append(*list, cv)
-	})
 }
 
 func (c *Changer) Put(name string, val interface{}) {
@@ -31,17 +25,18 @@ func (c *Changer) Put(name string, val interface{}) {
 	if c.name == name {
 		c.list = append(c.list, val)
 	} else {
-		c.cb(&ChangerValue{c.name, c.list})
+		c.retList = append(c.retList, &ChangerValue{c.name, c.list})
 		c.name = name
 		c.list = make([]interface{}, 0, 32)
 		c.list = append(c.list, val)
 	}
 }
 
-func (c *Changer) Done() {
+func (c *Changer) Done() []*ChangerValue {
 	if len(c.list) > 0 {
-		c.cb(&ChangerValue{c.name, c.list})
+		c.retList = append(c.retList, &ChangerValue{c.name, c.list})
 		c.name = ""
 		c.list = make([]interface{}, 0, 32)
 	}
+	return c.retList
 }
