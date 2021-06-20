@@ -65,3 +65,13 @@ Until(txt, " end")
 // Returns "", "" if none of the elements are found
 text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
 ```
+
+## Parsers out of box
+```go
+// Parses strings:
+// "string of text", 'string of text', `string of text`
+// Escaping works with `\` symbol. Also parses: \n \t \0 \r
+//
+// Returns: StringToken(Value, Quote)
+res := StringParser(text)
+```
