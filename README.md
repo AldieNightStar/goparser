@@ -74,4 +74,10 @@ text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
 //
 // Returns: StringToken(Value, Quote)
 res := StringParser(text)
+
+// Parses numbers of float64
+// Supports dot values. 1.32, 4.678 etc. But not two dots
+//
+// Returns: NumberToken(Value: float64)
+res := NumberParser(text)
 ```
