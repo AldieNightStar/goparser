@@ -81,3 +81,24 @@ res := StringParser(text)
 // Returns: NumberToken(Value: float64)
 res := NumberParser(text)
 ```
+
+## Pipes and filters
+#### * Changer
+* Collects the same sequence of tokens until name is changed
+```go
+// Create list for changer tokens output
+list := make([]*ChangerValue, 0, 32)
+
+// Create changer itself and give list for the output
+changer := pipe.NewChangerToList(&list)
+
+// Now we can filter diff values
+changer.Put("A", 12)
+changer.Put("A", 24)
+changer.Put("B", 144)
+changer.Done() // And we are done
+
+// And we can check
+list[0] // A : 12, 24
+list[1] // B : 144
+```
