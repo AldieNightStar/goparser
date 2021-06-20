@@ -43,6 +43,12 @@ func TestUntilOf(t *testing.T) {
 	if s, s2 := UntilOf(txt[9:], []string{"*", "@"}); !(s == "EasterEgg" && s2 == "@") {
 		t.Fail()
 	}
+	if s, s2 := UntilOf(txt, []string{"+"}); !(s == "" && s2 == "") {
+		t.Fail()
+	}
+	if s, s2 := UntilOf(txt, []string{"+", " Joe"}); !(s == "Kill" && s2 == " Joe") {
+		t.Fail()
+	}
 }
 
 func TestWhile(t *testing.T) {

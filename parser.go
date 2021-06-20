@@ -1,7 +1,10 @@
 package parser
 
 type Result struct {
+	// Token any object (Can be string or some struct)
 	Token interface{}
+
+	// Count of processed symbols
 	Count int
 }
 
