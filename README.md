@@ -60,14 +60,14 @@ type Result struct {
 // Returns true when txt has "call" next
 IsNext(txt, "call")
 
-// Returns next 4 symbols from text
+// Returns next 4 symbols from the text
 GetNext(txt, 4)
 
 // Reads text until some substring
 // Returns "" if until-substring is not found
 Until(txt, " end")
 
-// Reads text until the closest one string from list
+// Reads text until the closest one string from the list
 // Returns text until string and stop-string itself as second param
 // Returns "", "" if none of the elements are found
 text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
