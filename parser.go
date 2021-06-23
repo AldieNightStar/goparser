@@ -20,31 +20,20 @@ func ParseOne(str string, parsers []Parser) *Result {
 	return nil
 }
 
-func ParseChan(str string, parsers []Parser, c chan *Result) {
+func Parse(str string, parsers []Parser) IteratorResult {
 	cnt := 0
-	for {
+	return func() *Result {
 		if cnt >= len(str) {
-			close(c)
-			return
+			return nil
 		}
 		res := ParseOne(str[cnt:], parsers)
 		if res != nil {
-			c <- res
 			cnt += res.Count
+			return res
 		} else {
 			u := &UnknownToken{Value: str[0:1]}
 			cnt += 1
-			c <- &Result{Token: u, Count: 1}
+			return &Result{Token: u, Count: 1}
 		}
 	}
-}
-
-func Parse(str string, parsers []Parser) []*Result {
-	arr := make([]*Result, 0)
-	c := make(chan *Result)
-	go ParseChan(str, parsers, c)
-	for res := range c {
-		arr = append(arr, res)
-	}
-	return arr
 }

@@ -13,7 +13,8 @@ func Test_Parser(t *testing.T) {
 		return nil
 	}
 
-	arr := Parse("a.bc.a", []Parser{p})
+	arr := Parse("a.bc.a", []Parser{p}).ToArray()
+
 	strCnt := 0
 	etcCnt := 0
 

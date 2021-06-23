@@ -6,21 +6,28 @@ import parser "github.com/AldieNightStar/goparser"
 ```
 
 ## Usage
+* Get all tokens array
+```go
+iter := Parse(text, parsers).ToArray()
+```
+* Get tokens iterator (We can break iteration)
 ```go
 // text - text to parse
 // parsers - array of 'Parser' objects
-// returns: []*Result
-results := Parse(text, parsers)
+//
+// returns: IteratorResults
+iter := Parse(text, parsers)
 
+// Pulls *Result one by one until `nil`
+result := iter()
+
+```
+* Pull one token and calculate by ourself
+```go
 // text - text to parse
 // parsers - array of 'Parser' objects
 // returns: *Result
 result := ParseOne(text, parsers)
-
-// text - text to parse
-// parsers - array of 'Parser' objects
-// ch - channel of '*Result' objects (Will be closed after parsing)
-go ParseChan(text, parsers, ch)
 ```
 
 ## Parser example
@@ -34,7 +41,7 @@ func AbcParser(t string) *Result {
 }
 
 // Then try to parse
-arr := parser.Parse(text, &AbcParser)
+arr := parser.Parse(text, &AbcParser).ToArray()
 ```
 
 ## Result
@@ -66,7 +73,7 @@ Until(txt, " end")
 text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
 ```
 
-## Parsers out of box
+## Parsers out of the box
 ```go
 // Parses strings:
 // "string of text", 'string of text', `string of text`
