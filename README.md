@@ -19,7 +19,13 @@ iter := Parse(text, parsers).ToArray()
 iter := Parse(text, parsers)
 
 // Pulls *Result one by one until `nil`
-result := iter()
+for {
+	result := iter()
+	if result == nil {
+		break
+	}
+	// Do something with tokens
+}
 
 ```
 * Pull one token and calculate by ourself
@@ -71,6 +77,34 @@ Until(txt, " end")
 // Returns text until string and stop-string itself as second param
 // Returns "", "" if none of the elements are found
 text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
+```
+
+## Result Iterator
+* Iterator is not reusable
+* To use iterator again - recreate it
+```go
+iter := Parse("some text ...", parsersArr)
+
+// Get all tokens from the iterator as an Array
+allTokensArr := iter.ToArray()
+
+// Get tokens which is ok with your function criterias.
+// To allow token to be in filtered list - func should return true
+// ! - Skips unwanted tokens
+filteredTokensArr := iter.FilterArray(func (res *Result) bool {
+	// return true | false
+})
+
+// Returns list of tokens until some special token
+// - Last token is not included
+untilSomeTokenArr := iter.UntilArray(func (res *Result) bool {
+	// return true | false
+	//	true  - this is until-token (end-token)
+	//  false - this is not until-token (end-token)
+})
+
+// Retuns up to {n} tokens or less (depends on count)
+fewTokensArr := iter.FewArray(5)
 ```
 
 ## Parsers out of the box
