@@ -1,11 +1,11 @@
 package parser
 
-type IteratorResult func() *Result
+type IteratorResult func() (*Result, int)
 
 func (i IteratorResult) ToArray() []*Result {
 	arr := make([]*Result, 0, 32)
 	for {
-		item := i()
+		item, _ := i()
 		if item == nil {
 			break
 		}
@@ -17,7 +17,7 @@ func (i IteratorResult) ToArray() []*Result {
 func (i IteratorResult) FilterArray(filter func(*Result) bool) []*Result {
 	arr := make([]*Result, 0, 32)
 	for {
-		item := i()
+		item, _ := i()
 		if item == nil {
 			break
 		}
@@ -33,7 +33,7 @@ func (i IteratorResult) FilterArray(filter func(*Result) bool) []*Result {
 func (i IteratorResult) UntilArray(until func(*Result) bool) []*Result {
 	arr := make([]*Result, 0, 32)
 	for {
-		item := i()
+		item, _ := i()
 		isEnd := until(item)
 		if isEnd || item == nil {
 			break
@@ -46,7 +46,7 @@ func (i IteratorResult) UntilArray(until func(*Result) bool) []*Result {
 func (i IteratorResult) FewArray(cnt int) []*Result {
 	arr := make([]*Result, 0, 32)
 	for {
-		item := i()
+		item, _ := i()
 		if len(arr) >= cnt {
 			break
 		}

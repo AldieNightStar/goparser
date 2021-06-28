@@ -22,18 +22,18 @@ func ParseOne(str string, parsers []Parser) *Result {
 
 func Parse(str string, parsers []Parser) IteratorResult {
 	cnt := 0
-	return func() *Result {
+	return func() (*Result, int) {
 		if cnt >= len(str) {
-			return nil
+			return nil, cnt
 		}
 		res := ParseOne(str[cnt:], parsers)
 		if res != nil {
 			cnt += res.Count
-			return res
+			return res, cnt
 		} else {
 			u := &UnknownToken{Value: str[0:1]}
 			cnt += 1
-			return &Result{Token: u, Count: 1}
+			return &Result{Token: u, Count: 1}, cnt
 		}
 	}
 }

@@ -14,6 +14,10 @@ func NumberParser(t string) *Result {
 	dot := false
 	for i := 0; i < len(t); i++ {
 		c := t[i]
+		if i == 0 && c == '-' {
+			sb.WriteByte(c)
+			continue
+		}
 		if c == '.' {
 			if !dot {
 				dot = true

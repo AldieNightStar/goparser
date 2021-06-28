@@ -19,12 +19,13 @@ iter := Parse(text, parsers).ToArray()
 iter := Parse(text, parsers)
 
 // Pulls *Result one by one until `nil`
+// Second return param is count - Symbol position
 for {
-	result := iter()
+	result, count := iter()
 	if result == nil {
 		break
 	}
-	// Do something with tokens
+	// Do something with token and count
 }
 
 ```
@@ -76,7 +77,7 @@ Until(txt, " end")
 // Reads text until the closest one string from the list
 // Returns text until string and stop-string itself as second param
 // Returns "", "" if none of the elements are found
-text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
+text, s := UntilOf(txt, string[]{"call", "end", "stop"})
 ```
 
 ## Result Iterator
@@ -84,6 +85,10 @@ text, s :=  UntilOf(txt, string[]{"call", "end", "stop"})
 * To use iterator again - recreate it
 ```go
 iter := Parse("some text ...", parsersArr)
+
+// Pulls values one by one until `nil`
+// Second return param is count of processed symbols (Symbol position)
+token, count := iter()
 
 // Get all tokens from the iterator as an Array
 allTokensArr := iter.ToArray()

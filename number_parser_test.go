@@ -28,7 +28,22 @@ func TestNumberParser(t *testing.T) {
 	}
 	if tok, ok := res.Token.(NumberToken); ok {
 		if tok.Value != float64(1.44) {
-			t.Fatal("Token 2 is not valid value.", tok)
+			t.Fatal("Token 2 is not valid value.", tok.Value)
+		}
+	}
+
+	s = "-2.32 ---"
+	res = NumberParser(s)
+
+	if res == nil {
+		t.Fatal("Result is null")
+	}
+	if res.Token == nil {
+		t.Fatal("Result is nil")
+	}
+	if tok, ok := res.Token.(NumberToken); ok {
+		if tok.Value != float64(-2.32) {
+			t.Fatal("Token 3 is not valid value.", tok.Value)
 		}
 	}
 }
