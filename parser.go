@@ -22,7 +22,15 @@ func ParseOne(str string, parsers []Parser) *Result {
 
 func Parse(str string, parsers []Parser) IteratorResult {
 	cnt := 0
-	return func() (*Result, int) {
+	return func() (result *Result, count int) {
+		var err interface{} = nil
+		defer func() {
+			err = recover()
+			if err != nil {
+				result = nil
+				count = cnt
+			}
+		}()
 		if cnt >= len(str) {
 			return nil, cnt
 		}
