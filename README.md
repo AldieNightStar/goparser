@@ -97,7 +97,7 @@ lineInfos := Util_GetLines(sourceCode)
 //
 // lineInfos - []*LineInfo
 // cnt       - int
-Util_FindLineInfoAt(lineInfos, cnt)
+oneLineInfo := Util_FindLineInfoAt(lineInfos, cnt)
 ```
 
 ## Result Iterator
