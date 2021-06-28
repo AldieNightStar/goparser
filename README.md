@@ -78,6 +78,26 @@ Until(txt, " end")
 // Returns text until string and stop-string itself as second param
 // Returns "", "" if none of the elements are found
 text, s := UntilOf(txt, string[]{"call", "end", "stop"})
+
+// =======================
+// Code line utils
+// =======================
+
+// Returns array of each line info:
+//   From   - From which symbol current line is started
+//   To     - Last line symbol position
+//   Value  - Line itself
+//   Number - Line number
+//
+// Better to use it once before the parsing.
+lineInfos := Util_GetLines(sourceCode)
+
+// Get specific line info by symbol position
+// Best to know current line number etc
+//
+// lineInfos - []*LineInfo
+// cnt       - int
+Util_FindLineInfoAt(lineInfos, cnt)
 ```
 
 ## Result Iterator
