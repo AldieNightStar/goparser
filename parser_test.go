@@ -13,10 +13,14 @@ func Test_Parser(t *testing.T) {
 		return nil
 	}
 
-	arr := Parse("a.bc.a", []Parser{p}).ToArray()
+	arr, c := Parse("a.bc.a", []Parser{p}).ToArray()
 
 	strCnt := 0
 	etcCnt := 0
+
+	if c != 6 {
+		t.Fatal("Result count sym is not 6.", c)
+	}
 
 	for i := 0; i < len(arr); i++ {
 		if _, ok := arr[i].Token.(string); ok {
@@ -40,7 +44,11 @@ func Test_Parser_Ony_Three_Tokens(t *testing.T) {
 		}
 		return nil
 	}
-	arr := Parse("a.bc.a", []Parser{p}).FewArray(3)
+	arr, c := Parse("a.bc.a", []Parser{p}).FewArray(3)
+
+	if c != 3 {
+		t.Fatal("Result count sym is not 3.", c)
+	}
 
 	if len(arr) != 3 {
 		t.Fatal("Count is not 3.", len(arr))
@@ -54,12 +62,16 @@ func Test_Parser_Only_Filtered_Tokens(t *testing.T) {
 		}
 		return nil
 	}
-	arr := Parse("a.bc.a", []Parser{p}).FilterArray(func(r *Result) bool {
+	arr, c := Parse("a.bc.a", []Parser{p}).FilterArray(func(r *Result) bool {
 		if _, ok := r.Token.(string); ok {
 			return true
 		}
 		return false
 	})
+
+	if c != 6 {
+		t.Fatal("Result count sym is not 6.", c)
+	}
 
 	if len(arr) != 4 {
 		t.Fatal("Count is not 4.", len(arr))
@@ -73,7 +85,7 @@ func Test_Parser_Unti_C_Token(t *testing.T) {
 		}
 		return nil
 	}
-	arr := Parse("a.bc.a", []Parser{p}).UntilArray(
+	arr, c := Parse("a.bc.a", []Parser{p}).UntilArray(
 		func(r *Result) bool {
 			if t, ok := r.Token.(string); ok {
 				return t == "c"
@@ -81,6 +93,10 @@ func Test_Parser_Unti_C_Token(t *testing.T) {
 			return false
 		},
 	)
+
+	if c != 3 {
+		t.Fatal("Result count sym is not 3.", c)
+	}
 
 	if len(arr) != 3 {
 		t.Fatal("Count is not 4.", len(arr))

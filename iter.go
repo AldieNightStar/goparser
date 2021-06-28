@@ -2,22 +2,25 @@ package parser
 
 type IteratorResult func() (*Result, int)
 
-func (i IteratorResult) ToArray() []*Result {
+func (i IteratorResult) ToArray() ([]*Result, int) {
 	arr := make([]*Result, 0, 32)
+	pos := 0
 	for {
-		item, _ := i()
+		item, newPos := i()
 		if item == nil {
 			break
 		}
+		pos = newPos
 		arr = append(arr, item)
 	}
-	return arr
+	return arr, pos
 }
 
-func (i IteratorResult) FilterArray(filter func(*Result) bool) []*Result {
+func (i IteratorResult) FilterArray(filter func(*Result) bool) ([]*Result, int) {
 	arr := make([]*Result, 0, 32)
+	pos := 0
 	for {
-		item, _ := i()
+		item, p := i()
 		if item == nil {
 			break
 		}
@@ -25,35 +28,40 @@ func (i IteratorResult) FilterArray(filter func(*Result) bool) []*Result {
 		if !ok {
 			continue
 		}
+		pos = p
 		arr = append(arr, item)
 	}
-	return arr
+	return arr, pos
 }
 
-func (i IteratorResult) UntilArray(until func(*Result) bool) []*Result {
+func (i IteratorResult) UntilArray(until func(*Result) bool) ([]*Result, int) {
 	arr := make([]*Result, 0, 32)
+	pos := 0
 	for {
-		item, _ := i()
+		item, p := i()
 		isEnd := until(item)
 		if isEnd || item == nil {
 			break
 		}
+		pos = p
 		arr = append(arr, item)
 	}
-	return arr
+	return arr, pos
 }
 
-func (i IteratorResult) FewArray(cnt int) []*Result {
+func (i IteratorResult) FewArray(cnt int) ([]*Result, int) {
 	arr := make([]*Result, 0, 32)
+	pos := 0
 	for {
-		item, _ := i()
+		item, p := i()
 		if len(arr) >= cnt {
 			break
 		}
 		if item == nil {
 			break
 		}
+		pos = p
 		arr = append(arr, item)
 	}
-	return arr
+	return arr, pos
 }

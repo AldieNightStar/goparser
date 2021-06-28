@@ -111,25 +111,29 @@ iter := Parse("some text ...", parsersArr)
 token, count := iter()
 
 // Get all tokens from the iterator as an Array
-allTokensArr := iter.ToArray()
+// Second return param is count of processed symbols (Symbol position)
+allTokensArr, count := iter.ToArray()
 
 // Get tokens which is ok with your function criterias.
 // To allow token to be in filtered list - func should return true
 // ! - Skips unwanted tokens
-filteredTokensArr := iter.FilterArray(func (res *Result) bool {
+// Second return param is count of processed symbols (Symbol position)
+filteredTokensArr, count := iter.FilterArray(func (res *Result) bool {
 	// return true | false
 })
 
 // Returns list of tokens until some special token
 // - Last token is not included
-untilSomeTokenArr := iter.UntilArray(func (res *Result) bool {
+// Second return param is count of processed symbols (Symbol position)
+untilSomeTokenArr, count := iter.UntilArray(func (res *Result) bool {
 	// return true | false
 	//	true  - this is until-token (end-token)
 	//  false - this is not until-token (end-token)
 })
 
 // Retuns up to {n} tokens or less (depends on count)
-fewTokensArr := iter.FewArray(5)
+// Second return param is count of processed symbols (Symbol position)
+fewTokensArr, count := iter.FewArray(5)
 ```
 
 ## Parsers out of the box
