@@ -170,5 +170,5 @@ res := VariableParser(text)
 //		ParseOne(text, []Parser{parser1, parser2, endParser})
 //
 // Returns:   *SingleToken(Name: string)
-endParser := SingleTokenParser("end")
+endParser := CreateSingleTokenParser("end")
 ```
