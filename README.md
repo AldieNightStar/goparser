@@ -142,19 +142,32 @@ fewTokensArr, count := iter.FewArray(5)
 // "string of text", 'string of text', `string of text`
 // Escaping works with `\` symbol. Also parses: \n \t \0 \r
 //
-// Returns: StringToken(Value, Quote)
+// Returns:   StringToken(Value, Quote)
 res := StringParser(text)
 
 // Parses numbers of float64
 // Supports dot values. 1.32, 4.678 etc. But not two dots
 //
-// Returns: NumberToken(Value: float64)
+// Returns:   NumberToken(Value: float64)
 res := NumberParser(text)
 
 // Parses variable string (These which are used in simple languages)
 // 	Samples:
 //		ProfileName, name, second_name, prof1, prof2, etc
 //
-// Returns: VariableToken(Name: string)
+// Returns:   VariableToken(Name: string)
 res := VariableParser(text)
+```
+
+## Parser creators out of the box
+```go
+// Create parser which parses only ONE hardcoded peace of text and creates a token
+// Can be used as an end of recursive parsing
+// Example:
+// 		endParser := SingleToken("}")
+// Then can be used:
+//		ParseOne(text, []Parser{parser1, parser2, endParser})
+//
+// Returns:   SingleToken(Name: string)
+endParser := SingleTokenParser("end")
 ```
