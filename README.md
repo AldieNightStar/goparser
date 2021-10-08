@@ -19,9 +19,9 @@ iter := Parse(text, parsers).ToArray()
 iter := Parse(text, parsers)
 
 // Pulls *Result one by one until `nil`
-// Second return param is count - Symbol position
+// Second return param is position - Symbol position
 for {
-	result, count := iter()
+	result, position := iter()
 	if result == nil {
 		break
 	}
@@ -150,4 +150,11 @@ res := StringParser(text)
 //
 // Returns: NumberToken(Value: float64)
 res := NumberParser(text)
+
+// Parses variable string (These which are used in simple languages)
+// 	Samples:
+//		ProfileName, name, second_name, prof1, prof2, etc
+//
+// Returns: VariableToken(Name: string)
+res := VariableParser(text)
 ```
