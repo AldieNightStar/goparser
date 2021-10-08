@@ -20,7 +20,7 @@ iter := Parse(text, parsers)
 
 // Pulls *Result one by one until `nil`
 // Second return param is position - Symbol position
-// Postion can be used via Util_... functions to get line number at column number if needed
+// Position can be used via Util_... functions to get line number at column number if needed
 for {
 	result, position := iter()
 	if result == nil {
