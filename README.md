@@ -165,6 +165,7 @@ res := VariableParser(text)
 //      Func(GetX(), GetY(), GetZ()) 
 //
 // Returns: 	*FuncCallToken(FuncName: string, Args: []inteface{})
+res := FuncCallParser(text)
 ```
 
 ## Parser creators out of the box
