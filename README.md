@@ -161,8 +161,8 @@ res := VariableParser(text)
 
 // Parse function call
 //  Samples:
-//		Func(a, b, c)
-//      Func(GetX(), GetY(), GetZ()) 
+//        Func(a, b, c)
+//        Func(GetX(), GetY(), GetZ()) 
 //
 // Returns: 	*FuncCallToken(FuncName: string, Args: []inteface{})
 res := FuncCallParser(text)
