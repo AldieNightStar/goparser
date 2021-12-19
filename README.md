@@ -158,6 +158,13 @@ res := NumberParser(text)
 //
 // Returns:   *VariableToken(Name: string)
 res := VariableParser(text)
+
+// Parse function call
+//  Samples:
+//		Func(a, b, c)
+//      Func(GetX(), GetY(), GetZ()) 
+//
+// Returns: 	*FuncCallToken(FuncName: string, Args: []inteface{})
 ```
 
 ## Parser creators out of the box
